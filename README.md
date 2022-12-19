@@ -9,16 +9,16 @@ $ npm install
 
 ## Running the app
 
+In order to execute the application you must have installed docker compose.
+
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+# Set up the application in dev mode and its dependencies in detached mode
+$ docker compose -f .docker/compose.yaml up -d
 ```
+
+Two docker images will be created: a mysql database and a containerized application.
+
+<sub>Note: The application has enabled live reolading. Any change done in the application source code will trigger a new building and starting of the container<sub>
 
 ## Test
 

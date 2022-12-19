@@ -1,0 +1,42 @@
+version: '3.8'
+name: 'app-index-system'
+
+services:
+  db:
+    container_name: db
+    image: mysql:5.7
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=app-index
+    ports:
+      - '2401:3306'
+    volumes:
+      - db:/var/lib/mysql
+    healthcheck:
+      test: mysqladmin -p$$MYSQL_ROOT_PASSWORD ping -h 127.0.0.1
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    
+  app:
+    container_name: app
+    build: 
+      context: ./../
+      dockerfile: .docker/Dockerfile
+      target: dev
+    env_file: ./../.env
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - '3110:3000'
+    volumes:
+      - "./../:/src"
+      - "/var/www/node_modules"
+
+      
+
+volumes:
+  db:
+    driver: local
