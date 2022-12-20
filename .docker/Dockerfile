@@ -2,7 +2,7 @@ FROM node:18-alpine as base
 
 WORKDIR /src
 
-COPY package*.json /src
+COPY . /src/
 
 RUN npm ci && npm cache clean --force
 
@@ -10,6 +10,6 @@ FROM base as dev
 
 ENV NODE_ENV=development
 
-COPY . /src
+RUN chmod +x ./.docker/entrypoint.sh
 
-CMD ["npm", "run", "start:dev"]
+ENTRYPOINT ["sh", "./.docker/entrypoint.sh"]

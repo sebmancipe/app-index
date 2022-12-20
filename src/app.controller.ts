@@ -1,6 +1,6 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { AppService } from './app.service';
+import { AppService } from '@/app.service';
 
 @Controller()
 export class AppController {
