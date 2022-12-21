@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { DataSource, QueryRunner } from "typeorm";
 import { UserDto } from "@/user/dto/user.dto";
+import { Hasher } from "@/user/hasher/hasher";
 
 @Injectable()
 export class UserService {
@@ -9,6 +10,7 @@ export class UserService {
     constructor(
         @Inject('DATABASE_CONNECTION')
         dataSource: DataSource,
+        private readonly hasher: Hasher
     ) {
         this.queryRunner = dataSource.createQueryRunner();
     }
@@ -23,9 +25,10 @@ export class UserService {
         return null;
     }
 
-    //TODO: Hash password
     public async saveUser(username: string, password: string): Promise<number> {
-        const user = await this.queryRunner.query(`INSERT INTO user(username, password) VALUES ('${username}', '${password}')`);
+        const hashedPassword = await this.hasher.hash(password);
+
+        const user = await this.queryRunner.query(`INSERT INTO user(username, password) VALUES ('${username}', '${hashedPassword}')`);
 
         return user.insertId;
     }

@@ -7,10 +7,11 @@ import { LocationModule } from '@/location/location.module';
 import { UserService } from '@/user/user.service';
 import { LocationService } from '@/location/location.service';
 import { ProfileService } from '@/user/profile.service';
+import { Hasher } from '@/user/hasher/hasher';
 
 @Module({
   imports: [DatabaseModule, UserModule, LocationModule],
   controllers: [AppController],
-  providers: [UserProfileLocationService, UserService, LocationService, ProfileService],
+  providers: [UserProfileLocationService, UserService, LocationService, ProfileService, Hasher],
 })
 export class AppModule {}
