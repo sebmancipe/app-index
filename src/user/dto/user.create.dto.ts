@@ -1,6 +1,5 @@
 import { IsString, IsNotEmpty } from "class-validator";
 
-//TODO: This thing is not validating keys strictly
 export class UserCreateDto {
     @IsString()
     @IsNotEmpty()
