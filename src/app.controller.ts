@@ -1,23 +1,16 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { DataSource } from 'typeorm';
-import { AppService } from '@/app.service';
 
 @Controller()
 export class AppController {
   constructor(
-    private readonly appService: AppService, 
     @Inject('DATABASE_CONNECTION')
-    private readonly dataSource: DataSource
-    ) {
-    }
-
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+    private readonly dataSource: DataSource,
+  ) {
   }
 
-  @Get('/application/status')
-  getApplicationStatus(): unknown {
+  @Get('/status')
+  async getApplicationStatus(): Promise<unknown> {
     return {
       serviceAvailable: true,
       dataSourceStatus: this.dataSource.isInitialized
