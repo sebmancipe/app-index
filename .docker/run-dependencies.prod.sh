@@ -11,5 +11,5 @@ echo 'Executing migrations...'
 npx typeorm migration:run -d ./dist/src/database/data-source.js
 echo 'Migrations up to date'
 
-echo 'Starting server...'
-npm run start:dev
+echo 'Executing project'
+npm run start

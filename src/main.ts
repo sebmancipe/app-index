@@ -9,7 +9,8 @@ async function bootstrap() {
   app.useGlobalPipes(
     new ValidationPipe({
       errorHttpStatusCode: HttpStatus.UNPROCESSABLE_ENTITY,
-  }));
+    }),
+  );
 
   app.useGlobalFilters(new ExceptionHandler());
   await app.listen(process.env.PORT || 3000);

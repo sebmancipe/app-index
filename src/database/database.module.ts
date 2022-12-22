@@ -1,6 +1,6 @@
-import { Global, Module } from "@nestjs/common";
-import { DataSource } from "typeorm";
-import dataSource from "@/database/data-source";
+import { Global, Module } from '@nestjs/common';
+import { DataSource } from 'typeorm';
+import dataSource from '@/database/data-source';
 
 @Global()
 @Module({

@@ -1,99 +1,105 @@
-import { DataSource, QueryRunner } from "typeorm";
-import { LocationService } from "@/location/location.service";
+import { DataSource, QueryRunner } from 'typeorm';
+import { LocationService } from '@/location/location.service';
 
 describe('[LocationService]', () => {
-    it('Creates an address with cityId and street', async () => {
-        const createQueryRunnerMock = jest.fn();
-        const dataSourceMock = {
-            createQueryRunner: createQueryRunnerMock,
-        } as any as DataSource;
+  it('Creates an address with cityId and street', async () => {
+    const createQueryRunnerMock = jest.fn();
+    const dataSourceMock = {
+      createQueryRunner: createQueryRunnerMock,
+    } as any as DataSource;
 
-        const queryMock = jest.fn();
-        const queryRunnerMock = {
-            query: queryMock,
-        } as any as QueryRunner;
+    const queryMock = jest.fn();
+    const queryRunnerMock = {
+      query: queryMock,
+    } as any as QueryRunner;
 
-        createQueryRunnerMock.mockReturnValue(queryRunnerMock);
-        queryMock.mockResolvedValue({insertId: 5});
+    createQueryRunnerMock.mockReturnValue(queryRunnerMock);
+    queryMock.mockResolvedValue({ insertId: 5 });
 
-        const locationService = new LocationService(dataSourceMock);
+    const locationService = new LocationService(dataSourceMock);
 
-        const addressId = await locationService.createAddress(1, 'Bakery St');
+    const addressId = await locationService.createAddress(1, 'Bakery St');
 
-        expect(addressId).toEqual(5);
-        expect(queryMock).toBeCalledTimes(1);
-        expect(createQueryRunnerMock).toBeCalledTimes(1);
-    });
-    
-    it('Gets a city using cityId', async () => {
-        const createQueryRunnerMock = jest.fn();
-        const dataSourceMock = {
-            createQueryRunner: createQueryRunnerMock,
-        } as any as DataSource;
+    expect(addressId).toEqual(5);
+    expect(queryMock).toBeCalledTimes(1);
+    expect(createQueryRunnerMock).toBeCalledTimes(1);
+  });
 
-        const queryMock = jest.fn();
-        const queryRunnerMock = {
-            query: queryMock,
-        } as any as QueryRunner;
+  it('Gets a city using cityId', async () => {
+    const createQueryRunnerMock = jest.fn();
+    const dataSourceMock = {
+      createQueryRunner: createQueryRunnerMock,
+    } as any as DataSource;
 
-        createQueryRunnerMock.mockReturnValue(queryRunnerMock);
-        queryMock.mockResolvedValue([{name: 'The awesome city', id: 5}]);
+    const queryMock = jest.fn();
+    const queryRunnerMock = {
+      query: queryMock,
+    } as any as QueryRunner;
 
-        const locationService = new LocationService(dataSourceMock);
+    createQueryRunnerMock.mockReturnValue(queryRunnerMock);
+    queryMock.mockResolvedValue([{ name: 'The awesome city', id: 5 }]);
 
-        const city = await locationService.getCity(5);
+    const locationService = new LocationService(dataSourceMock);
 
-        expect(city.id).toEqual(5);
-        expect(city.name).toEqual('The awesome city');
-        expect(queryMock).toBeCalledTimes(1);
-        expect(createQueryRunnerMock).toBeCalledTimes(1);
-    });
+    const city = await locationService.getCity(5);
 
-    it('Gets full address using an addressId', async () => {
-        const createQueryRunnerMock = jest.fn();
-        const dataSourceMock = {
-            createQueryRunner: createQueryRunnerMock,
-        } as any as DataSource;
+    expect(city.id).toEqual(5);
+    expect(city.name).toEqual('The awesome city');
+    expect(queryMock).toBeCalledTimes(1);
+    expect(createQueryRunnerMock).toBeCalledTimes(1);
+  });
 
-        const queryMock = jest.fn();
-        const queryRunnerMock = {
-            query: queryMock,
-        } as any as QueryRunner;
+  it('Gets full address using an addressId', async () => {
+    const createQueryRunnerMock = jest.fn();
+    const dataSourceMock = {
+      createQueryRunner: createQueryRunnerMock,
+    } as any as DataSource;
 
-        createQueryRunnerMock.mockReturnValue(queryRunnerMock);
-        queryMock.mockResolvedValue([{street: 'Bakery St', cityName: 'The awesome city', countryName: 'Colombia'}]);
+    const queryMock = jest.fn();
+    const queryRunnerMock = {
+      query: queryMock,
+    } as any as QueryRunner;
 
-        const locationService = new LocationService(dataSourceMock);
+    createQueryRunnerMock.mockReturnValue(queryRunnerMock);
+    queryMock.mockResolvedValue([
+      {
+        street: 'Bakery St',
+        cityName: 'The awesome city',
+        countryName: 'Colombia',
+      },
+    ]);
 
-        const fullAddress = await locationService.getFullAddress(5);
+    const locationService = new LocationService(dataSourceMock);
 
-        expect(fullAddress.cityName).toEqual('The awesome city');
-        expect(fullAddress.countryName).toEqual('Colombia');
-        expect(fullAddress.street).toEqual('Bakery St');
-        expect(queryMock).toBeCalledTimes(1);
-        expect(createQueryRunnerMock).toBeCalledTimes(1);
-    });
+    const fullAddress = await locationService.getFullAddress(5);
 
-    it('Gets null full address if not found', async () => {
-        const createQueryRunnerMock = jest.fn();
-        const dataSourceMock = {
-            createQueryRunner: createQueryRunnerMock,
-        } as any as DataSource;
+    expect(fullAddress.cityName).toEqual('The awesome city');
+    expect(fullAddress.countryName).toEqual('Colombia');
+    expect(fullAddress.street).toEqual('Bakery St');
+    expect(queryMock).toBeCalledTimes(1);
+    expect(createQueryRunnerMock).toBeCalledTimes(1);
+  });
 
-        const queryMock = jest.fn();
-        const queryRunnerMock = {
-            query: queryMock,
-        } as any as QueryRunner;
+  it('Gets null full address if not found', async () => {
+    const createQueryRunnerMock = jest.fn();
+    const dataSourceMock = {
+      createQueryRunner: createQueryRunnerMock,
+    } as any as DataSource;
 
-        createQueryRunnerMock.mockReturnValue(queryRunnerMock);
-        queryMock.mockResolvedValue([]);
+    const queryMock = jest.fn();
+    const queryRunnerMock = {
+      query: queryMock,
+    } as any as QueryRunner;
 
-        const locationService = new LocationService(dataSourceMock);
+    createQueryRunnerMock.mockReturnValue(queryRunnerMock);
+    queryMock.mockResolvedValue([]);
 
-        const fullAddress = await locationService.getFullAddress(5);
+    const locationService = new LocationService(dataSourceMock);
 
-        expect(fullAddress).toBeNull();
-        expect(queryMock).toBeCalledTimes(1);
-        expect(createQueryRunnerMock).toBeCalledTimes(1);
-    });
+    const fullAddress = await locationService.getFullAddress(5);
+
+    expect(fullAddress).toBeNull();
+    expect(queryMock).toBeCalledTimes(1);
+    expect(createQueryRunnerMock).toBeCalledTimes(1);
+  });
 });

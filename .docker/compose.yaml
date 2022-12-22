@@ -5,6 +5,7 @@ services:
   db:
     container_name: db
     image: mysql:5.7
+    platform: linux/amd64 #Because interoperability with Mac M1 chips
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=root
@@ -24,7 +25,7 @@ services:
     build: 
       context: ./../
       dockerfile: .docker/Dockerfile
-      target: dev
+      target: "${BUILD_TARGET:-release}"
     env_file: ./../.env
     depends_on:
       db:

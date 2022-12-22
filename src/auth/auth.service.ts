@@ -1,4 +1,3 @@
-
 import { Injectable } from '@nestjs/common';
 import { UserService } from '@/user/user.service';
 import { Hasher } from '@/user/hasher/hasher';
@@ -11,13 +10,13 @@ export class AuthService {
   constructor(
     private usersService: UserService,
     private readonly hasher: Hasher,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
   ) {}
 
   async validateUser(username: string, password: string): Promise<UserDto> {
     const user = await this.usersService.getUser(username);
 
-    if (user && await this.hasher.same(password, user.password)) {
+    if (user && (await this.hasher.same(password, user.password))) {
       return user;
     }
 
@@ -29,6 +28,6 @@ export class AuthService {
 
     return {
       accessToken: this.jwtService.sign(payload),
-    }
+    };
   }
 }

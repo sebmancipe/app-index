@@ -1,52 +1,52 @@
-import { DataSource, QueryRunner } from "typeorm";
-import { ProfileService } from "@/user/profile.service";
+import { DataSource, QueryRunner } from 'typeorm';
+import { ProfileService } from '@/user/profile.service';
 
 describe('[ProfileService]', () => {
-    it('Creates a profile', async () => {
-        const createQueryRunnerMock = jest.fn();
-        const dataSourceMock = {
-            createQueryRunner: createQueryRunnerMock,
-        } as any as DataSource;
+  it('Creates a profile', async () => {
+    const createQueryRunnerMock = jest.fn();
+    const dataSourceMock = {
+      createQueryRunner: createQueryRunnerMock,
+    } as any as DataSource;
 
-        const queryMock = jest.fn();
-        const queryRunnerMock = {
-            query: queryMock,
-        } as any as QueryRunner;
+    const queryMock = jest.fn();
+    const queryRunnerMock = {
+      query: queryMock,
+    } as any as QueryRunner;
 
-        createQueryRunnerMock.mockReturnValue(queryRunnerMock);
-        queryMock.mockResolvedValue({insertId: 15});
+    createQueryRunnerMock.mockReturnValue(queryRunnerMock);
+    queryMock.mockResolvedValue({ insertId: 15 });
 
-        const profileService = new ProfileService(dataSourceMock);
+    const profileService = new ProfileService(dataSourceMock);
 
-        const profileId = await profileService.createProfile(1, 2, 'pepe');
+    const profileId = await profileService.createProfile(1, 2, 'pepe');
 
-        expect(profileId).toEqual(15);
-        expect(queryMock).toBeCalledTimes(1);
-        expect(createQueryRunnerMock).toBeCalledTimes(1);
-    });
-    
-    it('Gets a profile using an userId', async () => {
-        const createQueryRunnerMock = jest.fn();
-        const dataSourceMock = {
-            createQueryRunner: createQueryRunnerMock,
-        } as any as DataSource;
+    expect(profileId).toEqual(15);
+    expect(queryMock).toBeCalledTimes(1);
+    expect(createQueryRunnerMock).toBeCalledTimes(1);
+  });
 
-        const queryMock = jest.fn();
-        const queryRunnerMock = {
-            query: queryMock,
-        } as any as QueryRunner;
+  it('Gets a profile using an userId', async () => {
+    const createQueryRunnerMock = jest.fn();
+    const dataSourceMock = {
+      createQueryRunner: createQueryRunnerMock,
+    } as any as DataSource;
 
-        createQueryRunnerMock.mockReturnValue(queryRunnerMock);
-        queryMock.mockResolvedValue([{name: 'Pepe', addressId: 5, userId: 12}]);
+    const queryMock = jest.fn();
+    const queryRunnerMock = {
+      query: queryMock,
+    } as any as QueryRunner;
 
-        const locationService = new ProfileService(dataSourceMock);
+    createQueryRunnerMock.mockReturnValue(queryRunnerMock);
+    queryMock.mockResolvedValue([{ name: 'Pepe', addressId: 5, userId: 12 }]);
 
-        const profile = await locationService.getProfile(6);
+    const locationService = new ProfileService(dataSourceMock);
 
-        expect(profile.addressId).toEqual(5);
-        expect(profile.userId).toEqual(12);
-        expect(profile.name).toEqual('Pepe');
-        expect(queryMock).toBeCalledTimes(1);
-        expect(createQueryRunnerMock).toBeCalledTimes(1);
-    });
+    const profile = await locationService.getProfile(6);
+
+    expect(profile.addressId).toEqual(5);
+    expect(profile.userId).toEqual(12);
+    expect(profile.name).toEqual('Pepe');
+    expect(queryMock).toBeCalledTimes(1);
+    expect(createQueryRunnerMock).toBeCalledTimes(1);
+  });
 });

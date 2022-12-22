@@ -11,12 +11,12 @@ import { Hasher } from '@/user/hasher/hasher';
   imports: [DatabaseModule, LocationModule],
   controllers: [],
   providers: [
-    LocationService, 
-    ProfileService, 
+    LocationService,
+    ProfileService,
     UserProfileLocationService,
-    UserService, 
+    UserService,
     Hasher,
   ],
-  exports: [UserProfileLocationService]
+  exports: [UserProfileLocationService],
 })
 export class UserModule {}

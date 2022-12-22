@@ -7,7 +7,10 @@ import { UserLogInException } from '@/auth/exception';
 import { PassportStrategies } from '@/auth/strategies';
 
 @Injectable()
-export class LocalStrategy extends PassportStrategy(Strategy, PassportStrategies.Local) {
+export class LocalStrategy extends PassportStrategy(
+  Strategy,
+  PassportStrategies.Local,
+) {
   constructor(private authService: AuthService) {
     super();
   }

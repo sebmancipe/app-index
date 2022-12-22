@@ -1,4 +1,4 @@
 export enum PassportStrategies {
-    Local = 'local',
-    Jwt = 'jwt',
-};
+  Local = 'local',
+  Jwt = 'jwt',
+}

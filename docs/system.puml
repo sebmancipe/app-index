@@ -1,0 +1,15 @@
+@startuml app-index-system
+
+!include  https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Container.puml
+
+!define DEVICONS2 https://raw.githubusercontent.com/tupadr3/plantuml-icon-font-sprites/master/devicons2
+
+!include DEVICONS2/nestjs.puml
+!include DEVICONS2/mysql.puml
+
+Container(appIndexApp, "App Index App", "NodeJS, NestJS", "Handles users profile's creation along authentication","nestjs")
+ContainerDb(appIndexDb, "App Index DB", "MySQL", "Stores user's profiles and location information", "mysql")
+
+BiRel(appIndexApp, appIndexDb, "Stores and retrieves users and location information", "mysql with typeorm ORM")
+
+@enduml

@@ -7,7 +7,13 @@ import { ProfileModule } from '@/profile/profile.module';
 import { AuthModule } from '@/auth/auth.module';
 
 @Module({
-  imports: [DatabaseModule, UserModule, LocationModule, ProfileModule, AuthModule],
+  imports: [
+    DatabaseModule,
+    UserModule,
+    LocationModule,
+    ProfileModule,
+    AuthModule,
+  ],
   controllers: [AppController],
 })
 export class AppModule {}
