@@ -4,6 +4,7 @@ import { ApplicationException } from "./application.exception";
 @Catch()
 export class ExceptionHandler implements ExceptionFilter {
     catch(exception: Error, host: ArgumentsHost): void {
+        console.log(exception);
         const ctx = host.switchToHttp();
         const response = ctx.getResponse();
         const request = ctx.getRequest();
@@ -35,4 +36,7 @@ export enum ApplicationExceptionTypes {
   UnableToCreateUserBecauseOfCity = 'UNABLE-TO-CREATE-USER-BECAUSE-CITY-DOES-NOT-EXIST',
   UnableToCreateUserBecauseOfUser = 'UNABLE-TO-CREATE-USER-BECAUSE-USER-EXISTS',
   UnableToCreateUserBecauseOfDatabaseException = 'UNABLE-TO-CREATE-USER-BECAUSE-DATABASE-EXCEPTION',
+
+  //User login
+  PasswordMismatchOrUnexistentUser = 'USER-DOES-NOT-EXIST-OR-PASSWORD-MISMATCH',
 };  

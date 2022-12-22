@@ -18,4 +18,8 @@ export class Hasher {
 
         return hash;
     }
+
+    public async same(text: string, hash: string): Promise<boolean> {
+        return await this.hasher.compare(text, hash);
+    }
 }
