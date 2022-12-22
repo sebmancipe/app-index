@@ -2,7 +2,7 @@ import { AuthService } from "@/auth/auth.service";
 import { PassportStrategies } from "@/auth/strategies";
 import { UserCreateDto } from "@/user/dto/user.create.dto";
 import { UserProfileLocationService } from "@/user/user.profile.location.service";
-import { Body, Controller, Post, UseGuards, Request } from "@nestjs/common";
+import { Body, Controller, Post, UseGuards, Request, Get } from "@nestjs/common";
 import { AuthGuard } from "@nestjs/passport";
 
 @Controller('v1/profile')
@@ -26,5 +26,13 @@ export class ProfileController {
     @Request() req
   ): Promise<unknown> {
     return this.authService.login(req.user);
+  }
+
+  @Get()
+  @UseGuards(AuthGuard(PassportStrategies.Jwt))
+  async get(
+    @Request() req
+  ): Promise<unknown> {
+    return await this.userProfileLocationService.getUserProfileAndLocation(req.user.username)
   }
 }

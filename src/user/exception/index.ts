@@ -11,7 +11,13 @@ export class UserCreationException extends ApplicationException {
         return new this(ApplicationExceptionTypes.UnableToCreateUserBecauseOfUser, 'The user given already exists in the database', HttpStatus.CONFLICT);
     }
 
-    public static databaseException(e: Error): UserCreationException {
-        return new this(ApplicationExceptionTypes.UnableToCreateUserBecauseOfDatabaseException, e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    public static unableToCreateUserProfile(e: Error): UserCreationException {
+        return new this(ApplicationExceptionTypes.UnableToCreateUserProfile, e.message, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+}
+
+export class UserException extends ApplicationException {
+    public static userDoesNotExist(): UserException {
+        return new this(ApplicationExceptionTypes.UserDoesNotExists, 'User does not exists', HttpStatus.NOT_FOUND);
     }
 }

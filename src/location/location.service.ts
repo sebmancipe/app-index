@@ -1,6 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { DataSource, QueryRunner } from "typeorm";
-import { FullAddressDto } from "@/location/dto/address.dto";
+import { FullAddressDto } from "@/location/dto/full.address.dto";
 import { CityDto } from "@/location/dto/city.dto";
 
 @Injectable()
@@ -25,7 +25,7 @@ export class LocationService {
         const result = await this.queryRunner.query("SELECT * FROM city WHERE id = ?", [cityId]);
 
         if (result.length > 0){
-            return result[0];
+            return new CityDto(result[0]);
         }
 
         return null;

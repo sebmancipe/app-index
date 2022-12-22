@@ -5,7 +5,7 @@ import { UserCreateDto } from '@/user/dto/user.create.dto';
 import { UserService } from '@/user/user.service';
 import { UserProfileLocation } from '@/user/dto/output.dto';
 import { DataSource, QueryRunner } from 'typeorm';
-import { UserCreationException } from '@/user/exception';
+import { UserCreationException, UserException } from '@/user/exception';
 
 @Injectable()
 export class UserProfileLocationService {
@@ -40,7 +40,7 @@ export class UserProfileLocationService {
       } catch (e) {
         await this.queryRunner.rollbackTransaction();
 
-        throw UserCreationException.databaseException(e);
+        throw UserCreationException.unableToCreateUserProfile(e);
       }
     }
 
@@ -49,16 +49,21 @@ export class UserProfileLocationService {
 
   public async getUserProfileAndLocation(username: string): Promise<UserProfileLocation> {
     const user = await this.userService.getUser(username);
+
+    if(!user){
+      throw UserException.userDoesNotExist();
+    }
+
     const profile = await this.profileService.getProfile(user.id);
     const address = await this.locationService.getFullAddress(profile.addressId);
 
     return {
       id: user.id,
-      name: profile.name,
+      name: profile.name ?? 'not-set',
       address: {
-        street: address.street,
-        city: address.cityName,
-        country: address.countryName,
+        street: address.street ?? 'not-set',
+        city: address.cityName ?? 'not-set',
+        country: address.countryName ?? 'not-set',
       }
     }
   }

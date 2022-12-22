@@ -1,19 +1,13 @@
 import { Module } from '@nestjs/common';
 import { AppController } from '@/app.controller';
-import { UserProfileLocationService } from '@/user/user.profile.location.service';
 import { DatabaseModule } from '@/database/database.module';
 import { UserModule } from '@/user/user.module';
 import { LocationModule } from '@/location/location.module';
-import { UserService } from '@/user/user.service';
-import { LocationService } from '@/location/location.service';
-import { ProfileService } from '@/user/profile.service';
-import { Hasher } from '@/user/hasher/hasher';
 import { ProfileModule } from '@/profile/profile.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from '@/auth/auth.module';
 
 @Module({
   imports: [DatabaseModule, UserModule, LocationModule, ProfileModule, AuthModule],
   controllers: [AppController],
-  providers: [UserProfileLocationService, UserService, LocationService, ProfileService, Hasher],
 })
 export class AppModule {}

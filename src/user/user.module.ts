@@ -4,7 +4,7 @@ import { LocationModule } from '@/location/location.module';
 import { LocationService } from '@/location/location.service';
 import { ProfileService } from '@/user/profile.service';
 import { UserProfileLocationService } from '@/user/user.profile.location.service';
-import { UserService } from './user.service';
+import { UserService } from '@/user/user.service';
 import { Hasher } from '@/user/hasher/hasher';
 
 @Module({
@@ -13,7 +13,7 @@ import { Hasher } from '@/user/hasher/hasher';
   providers: [
     LocationService, 
     ProfileService, 
-    UserProfileLocationService, 
+    UserProfileLocationService,
     UserService, 
     Hasher,
   ],
