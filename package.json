@@ -71,6 +71,14 @@
       "json",
       "ts"
     ],
+    "modulePaths": ["<rootDir>"],
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/$1"
+    },
+    "moduleDirectories": [
+      "src",
+      "node_modules"
+    ],  
     "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
