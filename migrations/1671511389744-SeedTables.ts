@@ -50,8 +50,8 @@ export class SeedTables1671511389744 implements MigrationInterface {
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.query("TRUNCATE citiy");
-        await queryRunner.query("TRUNCATE countries");
+        await queryRunner.query("TRUNCATE city");
+        await queryRunner.query("TRUNCATE country");
     }
 
 }
